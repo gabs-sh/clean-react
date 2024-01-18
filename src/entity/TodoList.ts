@@ -5,6 +5,7 @@ export class TodoList extends Observable {
   private _list: Todo[];
 
   constructor(...props: any[]) {
+    // mover para uma classe intermediaria
     // temporário
     super();
     this._list = [];
@@ -21,9 +22,9 @@ export class TodoList extends Observable {
   }
 
   getProps() {
-    return {
-      _list: this._list,
-      observers: this.observers,
-    };
+    const props = {};
+    Object.keys(this).forEach((k) => (props[k] = this[k]));
+
+    return props;
   }
 }

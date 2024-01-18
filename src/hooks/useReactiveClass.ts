@@ -14,7 +14,7 @@ export function useReactiveClass<T extends Observable>(
   useEffect(() => {
     state.attach(
       new Observer("change", (data: T) => {
-        console.log(data);
+        // console.log(data);
 
         // @ts-ignore
         setState(new t(data.getProps()));
