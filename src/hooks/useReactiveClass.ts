@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import { ReactiveClass } from "../entity/TodoList";
 import { Observer } from "../entity/Observer";
+import { Observable } from "../entity/Observable";
 
-interface ReactiveClassConstructor<K, T> {
-  new (data: K): T;
+interface ReactiveClassConstructor<T> {
+  new (): T;
 }
 
-export function useReactiveClass<K, T extends ReactiveClass<K>>(
-  t: ReactiveClassConstructor<K, T>
+export function useReactiveClass<T extends Observable>(
+  t: ReactiveClassConstructor<T>
 ) {
-  const [state, setState] = useState<T>(new t({} as K));
+  const [state, setState] = useState<T>(new t());
 
   useEffect(() => {
     state.attach(
-      new Observer("change", (data: K) => {
+      new Observer("change", (data: T) => {
         console.log(data);
-        // setState(new t(data));
+
+        // @ts-ignore
+        setState(new t(data.getProps()));
       })
     );
   }, [state, t]);

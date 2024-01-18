@@ -1,14 +1,12 @@
 import { FormEvent, useRef } from "react";
 import { Todo } from "./entity/Todo";
-import { TodoList, TodoListProps } from "./entity/TodoList";
+import { TodoList } from "./entity/TodoList";
 import { useReactiveClass } from "./hooks/useReactiveClass";
 
 function App() {
   const inputRef = useRef<HTMLInputElement>(null);
   // const [todoList] = useState<TodoList>(new TodoList({}));
-  const { state: todoList } = useReactiveClass<TodoListProps, TodoList>(
-    TodoList
-  );
+  const { state: todoList } = useReactiveClass<TodoList>(TodoList);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();

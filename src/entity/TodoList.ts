@@ -1,25 +1,14 @@
 import { Observable } from "./Observable";
 import { Todo } from "./Todo";
 
-export abstract class ReactiveClass<T> extends Observable {
-  constructor(data?: T) {
-    super();
-    Object.assign(this, data);
-  }
-
-  //   abstract updateState(): void;
-}
-
-export interface TodoListProps {
-  _list?: Todo[];
-}
-
-export class TodoList extends ReactiveClass<TodoListProps> {
+export class TodoList extends Observable {
   private _list: Todo[];
 
-  constructor({ _list }: TodoListProps) {
-    super({ _list });
+  constructor(...props: any[]) {
+    // temporário
+    super();
     this._list = [];
+    Object.assign(this, ...props);
   }
 
   addTodo(todo: Todo): void {
@@ -29,5 +18,12 @@ export class TodoList extends ReactiveClass<TodoListProps> {
 
   getTodos(): Todo[] {
     return this._list;
+  }
+
+  getProps() {
+    return {
+      _list: this._list,
+      observers: this.observers,
+    };
   }
 }
